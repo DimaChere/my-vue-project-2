@@ -1,7 +1,21 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+<script setup>
+import LocationBlock from '@/components/LocationBlock.vue'
+import InventoryBlock from '@/components/InventoryBlock.vue'
 </script>
 
 <template>
-  <main></main>
+  <main>
+    <LocationBlock />
+    <InventoryBlock />
+  </main>
 </template>
+
+<style scoped>
+main {
+  display: flex;
+  gap: 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+  background-color: red;
+}
+</style>
