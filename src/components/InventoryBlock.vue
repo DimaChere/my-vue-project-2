@@ -47,6 +47,9 @@ function onDragStop(e: DragEvent, toIndex: number) {
           draggable="true"
         >
           <img v-if="item != null" :src="item.imageUrl" alt="" />
+          <div class="item-amount">
+            <p>{{ item?.amount }}</p>
+          </div>
         </div>
         <div
           v-else
@@ -91,6 +94,30 @@ function onDragStop(e: DragEvent, toIndex: number) {
   aspect-ratio: 1 / 1;
   border: 0.5px solid var(--color-border);
   background-color: var(--color-background-mute);
+}
+
+.item-amount {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0px;
+  right: 0;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border: 0.5px solid var(--color-border);
+  border-top-left-radius: 6px;
+  text-align: center;
+  background-color: var(--color-background-mute);
+}
+
+.item-amount p {
+  color: var(--color-border);
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12.1px;
 }
 
 .draggable {
