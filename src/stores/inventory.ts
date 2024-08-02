@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export type InventoryItem = {
@@ -54,9 +54,15 @@ export const useInventoryStore = defineStore('inventory', () => {
     JSON.parse(localStorage.getItem('inventoryItems') || 'null') ?? defaultInventory
   )
 
+  const chosen: Ref = ref(null)
+
   function saveState() {
     localStorage.setItem('inventoryItems', JSON.stringify(items))
   }
 
-  return { items, saveState }
+  function setChosen(num: number) {
+    chosen.value = num
+  }
+
+  return { items, chosen, saveState, setChosen }
 })

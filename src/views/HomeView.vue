@@ -1,6 +1,6 @@
 <script setup>
 import LocationBlock from '@/components/LocationBlock.vue'
-import InventoryBlock from '@/components/InventoryBlock.vue'
+import InventoryBlock from '@/components/inventory/InventoryBlock.vue'
 </script>
 
 <template>
@@ -15,7 +15,7 @@ main {
   display: flex;
   gap: 24px;
   max-width: 1080px;
-  margin: 0 auto;
+  margin: 30px auto;
   background-color: red;
 }
 </style>

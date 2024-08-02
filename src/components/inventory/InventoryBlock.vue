@@ -1,20 +1,22 @@
-<script setup lang="ts">
-import { useInventoryStore, type InventoryItem } from '../stores/inventory'
+<script setup>
+import DescriptionBlock from './DescriptionBlock.vue'
+import { useInventoryStore } from '@/stores/inventory'
 
 const store = useInventoryStore()
-const items: InventoryItem[] = store.items
+const items = store.items
+
 console.log(items)
-function onDragStart(e: DragEvent, fromIndex: number) {
+function onDragStart(e, fromIndex) {
   // e.dataTransfer?.dropEffect = 'move'
   // e.dataTransfer?.effectAllowed = 'move'
   e.dataTransfer?.setData('fromIndex', fromIndex.toString())
 }
 
-function onDragStop(e: DragEvent, toIndex: number) {
+function onDragStop(e, toIndex) {
   e.preventDefault()
 
   if (e.dataTransfer?.getData('fromIndex')) {
-    const fromIndex: number = parseInt(e.dataTransfer?.getData('fromIndex'))
+    const fromIndex = parseInt(e.dataTransfer?.getData('fromIndex'))
 
     if (items && items[fromIndex]) {
       const temp = items[fromIndex]
@@ -44,6 +46,15 @@ function onDragStop(e: DragEvent, toIndex: number) {
             }
           "
           @drop="onDragStop($event, index)"
+          @click="
+            () => {
+              if (store.chosen == index) {
+                store.setChosen(null)
+              } else {
+                store.setChosen(index)
+              }
+            }
+          "
           draggable="true"
         >
           <img v-if="item != null" :src="item.imageUrl" alt="" />
@@ -53,7 +64,7 @@ function onDragStop(e: DragEvent, toIndex: number) {
         </div>
         <div
           v-else
-          class="draggable"
+          class="draggable-blank"
           @dragover="
             (event) => {
               event.preventDefault()
@@ -63,21 +74,23 @@ function onDragStop(e: DragEvent, toIndex: number) {
         ></div>
       </div>
     </div>
+    <DescriptionBlock />
   </div>
 </template>
 
 <style scoped>
 .wrapper {
+  position: relative;
   flex: 2;
+  background-color: var(--color-background-mute);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
 }
 .inventory {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  background-color: var(--color-background-mute);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  overflow: hidden;
 }
 
 .absolute {
@@ -120,7 +133,8 @@ function onDragStop(e: DragEvent, toIndex: number) {
   line-height: 12.1px;
 }
 
-.draggable {
+.draggable,
+.draggable-blank {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +143,7 @@ function onDragStop(e: DragEvent, toIndex: number) {
   height: 100%;
 }
 
-.item img {
-  pointer-events: none;
+.draggable:hover {
+  cursor: pointer;
 }
 </style>
