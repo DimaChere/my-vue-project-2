@@ -17,49 +17,51 @@ function deleteSomeItems(amount) {
 </script>
 
 <template>
-  <div class="container" v-if="store.chosen !== null">
-    <div class="close">
-      <img src="../icons/carbon_close.svg" alt="Close" @click="store.setChosen(null)" />
-    </div>
-    <div>
-      <img :src="items[store.chosen].imageUrl" alt="" class="item-image" />
-    </div>
-    <div class="information-block">
-      <InventoryItemSkeleton v-if="true" />
-      <div v-else>
-        <p>{{ items[store.chosen].name }}</p>
-        <p>{{ items[store.chosen].description }}</p>
+  <transition name="slide">
+    <div class="container" v-if="store.chosen !== null">
+      <div class="close">
+        <img src="../icons/carbon_close.svg" alt="Close" @click="store.setChosen(null)" />
+      </div>
+      <div>
+        <img :src="items[store.chosen].imageUrl" alt="" class="item-image" />
+      </div>
+      <div class="information-block">
+        <InventoryItemSkeleton v-if="true" />
+        <div v-else>
+          <p>{{ items[store.chosen].name }}</p>
+          <p>{{ items[store.chosen].description }}</p>
+        </div>
+      </div>
+      <button
+        class="delete-button"
+        @click="
+          () => {
+            deleteItem = !deleteItem
+          }
+        "
+      >
+        Удалить предмет
+      </button>
+      <div class="confirm-block" v-if="deleteItem">
+        <input type="text" class="amount-input" placeholder="Введите количество" v-model="amount" />
+        <div class="confirm-buttons">
+          <button
+            class="decline-button"
+            @click="
+              () => {
+                deleteItem = !deleteItem
+              }
+            "
+          >
+            Отмена
+          </button>
+          <button class="confirm-button" @click="deleteSomeItems(parseInt(amount))">
+            Подтвердить
+          </button>
+        </div>
       </div>
     </div>
-    <button
-      class="delete-button"
-      @click="
-        () => {
-          deleteItem = !deleteItem
-        }
-      "
-    >
-      Удалить предмет
-    </button>
-    <div class="confirm-block" v-if="deleteItem">
-      <input type="text" class="amount-input" placeholder="Введите количество" v-model="amount" />
-      <div class="confirm-buttons">
-        <button
-          class="decline-button"
-          @click="
-            () => {
-              deleteItem = !deleteItem
-            }
-          "
-        >
-          Отмена
-        </button>
-        <button class="confirm-button" @click="deleteSomeItems(parseInt(amount))">
-          Подтвердить
-        </button>
-      </div>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <style scoped>
@@ -74,6 +76,16 @@ function deleteSomeItems(amount) {
   background-color: var(--color-background-mute);
   border-left: 1px solid var(--color-border);
   text-align: center;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.25s;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(100%);
 }
 
 .close {

@@ -16,8 +16,6 @@
 <style scoped>
 .information-skeleton {
   display: grid;
-
-  flex-direction: column;
   align-items: center;
 }
 

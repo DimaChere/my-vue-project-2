@@ -5,17 +5,18 @@ import InventoryBlock from '@/components/inventory/InventoryBlock.vue'
 
 <template>
   <main>
-    <LocationBlock />
-    <InventoryBlock />
+    <div class="invormation">
+      <LocationBlock />
+      <InventoryBlock />
+    </div>
   </main>
 </template>
 
 <style scoped>
-main {
+.invormation {
   display: flex;
   gap: 24px;
   max-width: 1080px;
   margin: 30px auto;
-  background-color: red;
 }
 </style>
