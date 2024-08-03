@@ -74,7 +74,6 @@ function deleteSomeItems(amount) {
   width: 50%;
   height: 100%;
   background-color: #26262680;
-  backdrop-filter: blur(5px);
   border-left: 1px solid var(--color-border);
   text-align: center;
 }
