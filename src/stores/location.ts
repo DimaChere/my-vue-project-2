@@ -1,5 +1,6 @@
 import { reactive, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
+import Location1 from '@/components/icons/location1.png'
 
 export type Location = {
   locationId: number
@@ -15,7 +16,7 @@ const defaultLocation: Location[] = [
     name: 'location1',
     description: 'description1',
     difficulty: 'medium',
-    imageUrl: '@/components/icons/location1.png'
+    imageUrl: Location1
   },
   null,
   null,

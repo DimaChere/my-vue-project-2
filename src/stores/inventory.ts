@@ -1,5 +1,7 @@
 import { reactive, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
+import ItemImage from '@/components/icons/ItemImage.svg'
+import ItemImage1 from '@/components/icons/ItemImage1.svg'
 
 export type InventoryItem = {
   itemId: number
@@ -15,7 +17,7 @@ const defaultInventory: InventoryItem[] = [
     name: 'item1',
     description: 'description1',
     amount: 1,
-    imageUrl: './src/components/icons/ItemImage.svg'
+    imageUrl: ItemImage
   },
   null,
   {
@@ -23,7 +25,7 @@ const defaultInventory: InventoryItem[] = [
     name: 'item2',
     description: 'description2',
     amount: 2,
-    imageUrl: './src/components/icons/ItemImage1.svg'
+    imageUrl: ItemImage1
   },
   null,
   null,
