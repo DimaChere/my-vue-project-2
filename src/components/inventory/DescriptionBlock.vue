@@ -6,6 +6,14 @@ const store = useInventoryStore()
 const items = store.items
 const deleteItem = ref(false)
 const amount = ref(null)
+
+function deleteSomeItems(amount) {
+  if (amount > store.items[store.chosen] || amount < 0) {
+    return
+  }
+  store.deleteSomeItems(amount)
+  store.items[store.chosen]
+}
 </script>
 
 <template>
@@ -46,7 +54,9 @@ const amount = ref(null)
         >
           Отмена
         </button>
-        <button class="confirm-button">Подтвердить</button>
+        <button class="confirm-button" @click="deleteSomeItems(parseInt(amount))">
+          Подтвердить
+        </button>
       </div>
     </div>
   </div>

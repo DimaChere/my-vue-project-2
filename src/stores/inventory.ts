@@ -54,7 +54,7 @@ export const useInventoryStore = defineStore('inventory', () => {
     JSON.parse(localStorage.getItem('inventoryItems') || 'null') ?? defaultInventory
   )
 
-  const chosen: Ref = ref(null)
+  const chosen: Ref<number | null> = ref(null)
 
   function saveState() {
     localStorage.setItem('inventoryItems', JSON.stringify(items))
@@ -64,5 +64,21 @@ export const useInventoryStore = defineStore('inventory', () => {
     chosen.value = num
   }
 
-  return { items, chosen, saveState, setChosen }
+  function deleteSomeItems(amount: number) {
+    if (chosen.value == null) {
+      return
+    }
+    const chosenItem = items[chosen.value]
+
+    if (chosenItem && chosenItem.amount - amount <= 0) {
+      items[chosen.value] = null
+      chosen.value = null
+    } else if (chosenItem) {
+      chosenItem.amount -= amount
+    }
+
+    localStorage.setItem('inventoryItems', JSON.stringify(items))
+  }
+
+  return { items, chosen, saveState, setChosen, deleteSomeItems }
 })
