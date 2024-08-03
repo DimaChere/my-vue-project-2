@@ -17,6 +17,9 @@ function deleteSomeItems(amount) {
 </script>
 
 <template>
+  <transition name="blur">
+    <div class="blur-block" v-if="store.chosen !== null"></div>
+  </transition>
   <transition name="slide">
     <div class="container" v-if="store.chosen !== null">
       <div class="close">
@@ -65,6 +68,25 @@ function deleteSomeItems(amount) {
 </template>
 
 <style scoped>
+.blur-block {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 50%;
+  backdrop-filter: blur(5px);
+}
+
+.blur-enter-active {
+  transition: backdrop-filter 1s ease-out;
+}
+
+.blur-enter-from,
+.blur-leave-to {
+  backdrop-filter: blur(0px);
+}
+
 .container {
   position: absolute;
   display: grid;
