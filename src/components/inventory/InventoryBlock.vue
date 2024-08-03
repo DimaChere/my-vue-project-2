@@ -14,8 +14,6 @@ function onDragStart(e, fromIndex) {
   }
 }
 
-function onDrag(e) {}
-
 function onDragEnd(e) {
   e.target.classList.remove('dragging')
   const amountBlock = e.target.querySelector('.item-amount')
@@ -52,7 +50,6 @@ function onDragStop(e, toIndex) {
           v-if="items[index]"
           :class="[store.chosen == index ? 'draggable active-block' : 'draggable', '']"
           @dragstart="onDragStart($event, index)"
-          @drag="onDrag($event)"
           @dragend="onDragEnd($event)"
           @dragover="
             (event) => {
@@ -128,6 +125,7 @@ function onDragStop(e, toIndex) {
 }
 
 .item-amount {
+  pointer-events: none;
   position: absolute;
   display: flex;
   justify-content: center;
