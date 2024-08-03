@@ -1,3 +1,8 @@
+# Тестовое задание на верстку
+
+Задеплоенный проект можно найти на https://my-vue-project-2.vercel.app/
+Т.к. информация хранится в LocalStorage, её можно обновить при помощи команды в концоли localStorage.clear()
+
 # my-vue-project-2
 
 This template should help get you started developing with Vue 3 in Vite.
