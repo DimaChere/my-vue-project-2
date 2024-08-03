@@ -24,6 +24,8 @@
   height: 30px;
   background: linear-gradient(90deg, #3c3c3c 0%, #444444 51.04%, #333333 100%);
   border-radius: 8px;
+  animation: gradient-animation 2s ease infinite;
+  background-size: 200% 200%;
 }
 
 .description-skeleton {
@@ -36,7 +38,9 @@
 .description-text {
   height: 10px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #3c3c3c 0%, #444444 51.04%, #333333 100%);
+  background-image: linear-gradient(90deg, #3c3c3c 0%, #444444 51.04%, #333333 100%);
+  animation: gradient-animation 2s ease infinite;
+  background-size: 200% 200%;
 }
 
 .description-text-big {
