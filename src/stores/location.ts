@@ -15,7 +15,7 @@ const defaultLocation: Location[] = [
     name: 'location1',
     description: 'description1',
     difficulty: 'medium',
-    imageUrl: './src/components/icons/location1.png'
+    imageUrl: '@/components/icons/location1.png'
   },
   null,
   null,
