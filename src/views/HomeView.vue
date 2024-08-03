@@ -1,5 +1,5 @@
 <script setup>
-import LocationBlock from '@/components/LocationBlock.vue'
+import LocationBlock from '@/components/location/LocationBlock.vue'
 import InventoryBlock from '@/components/inventory/InventoryBlock.vue'
 </script>
 

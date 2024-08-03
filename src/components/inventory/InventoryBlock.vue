@@ -5,27 +5,39 @@ import { useInventoryStore } from '@/stores/inventory'
 const store = useInventoryStore()
 const items = store.items
 
-console.log(items)
 function onDragStart(e, fromIndex) {
-  // e.dataTransfer?.dropEffect = 'move'
-  // e.dataTransfer?.effectAllowed = 'move'
   e.dataTransfer?.setData('fromIndex', fromIndex.toString())
+  e.target.classList.add('dragging')
+  const amountBlock = e.target.querySelector('.item-amount')
+  if (amountBlock) {
+    amountBlock.classList.add('hide-amount')
+  }
+}
+
+function onDrag(e) {}
+
+function onDragEnd(e) {
+  e.target.classList.remove('dragging')
+  const amountBlock = e.target.querySelector('.item-amount')
+  if (amountBlock) {
+    amountBlock.classList.remove('hide-amount')
+  }
 }
 
 function onDragStop(e, toIndex) {
   e.preventDefault()
+  const fromIndex = parseInt(e.dataTransfer?.getData('fromIndex'))
 
-  if (e.dataTransfer?.getData('fromIndex')) {
-    const fromIndex = parseInt(e.dataTransfer?.getData('fromIndex'))
-
-    if (items && items[fromIndex]) {
-      const temp = items[fromIndex]
-      items[fromIndex] = items[toIndex]
-      items[toIndex] = temp
+  if (items && items[fromIndex]) {
+    if (store.chosen == fromIndex) {
+      store.setChosen(toIndex)
     }
-
-    store.saveState()
+    const temp = items[fromIndex]
+    items[fromIndex] = items[toIndex]
+    items[toIndex] = temp
   }
+
+  store.saveState()
 }
 </script>
 
@@ -38,8 +50,10 @@ function onDragStop(e, toIndex) {
       <div class="item" v-for="(item, index) in items" :key="index">
         <div
           v-if="items[index]"
-          class="draggable"
+          :class="[store.chosen == index ? 'draggable active-block' : 'draggable', '']"
           @dragstart="onDragStart($event, index)"
+          @drag="onDrag($event)"
+          @dragend="onDragEnd($event)"
           @dragover="
             (event) => {
               event.preventDefault()
@@ -57,7 +71,7 @@ function onDragStop(e, toIndex) {
           "
           draggable="true"
         >
-          <img v-if="item != null" :src="item.imageUrl" alt="" />
+          <img v-if="item != null" :src="item.imageUrl" alt="" class="item-img" />
           <div class="item-amount">
             <p>{{ item?.amount }}</p>
           </div>
@@ -105,8 +119,12 @@ function onDragStop(e, toIndex) {
   justify-content: center;
   align-items: center;
   aspect-ratio: 1 / 1;
-  border: 0.5px solid var(--color-border);
   background-color: var(--color-background-mute);
+  box-shadow: 0 0 0 0.5px var(--color-border);
+}
+
+.item-img {
+  pointer-events: none;
 }
 
 .item-amount {
@@ -133,17 +151,31 @@ function onDragStop(e, toIndex) {
   line-height: 12.1px;
 }
 
+.active-block {
+  background-color: #2f2f2f !important;
+}
+
 .draggable,
 .draggable-blank {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
+  background-color: var(--color-background-mute);
   width: 100%;
   height: 100%;
 }
 
 .draggable:hover {
   cursor: pointer;
+}
+
+.dragging {
+  border-radius: 30px;
+  border: 1px solid var(--color-border);
+  opacity: 0.8;
+}
+
+.hide-amount {
+  display: none;
 }
 </style>
